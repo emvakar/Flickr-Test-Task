@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import OAuthSwift
 import Alamofire
 import SwiftyJSON
 
@@ -34,14 +33,12 @@ class API {
                 if let data = responseJSON.data {
                     let json = JSON(data)
                     completion(json["photos"]["photo"].arrayValue)
+                } else {
+                    completion([])
                 }
             }
         }
-        
-        
     }
-    
-    
 }
 
 

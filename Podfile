@@ -8,7 +8,6 @@ target 'Flickr Test Task' do
     # Pods for Flickr Test Task
     pod 'Alamofire'
     pod 'SwiftyJSON'
-    pod 'OAuthSwift'
     pod 'SDWebImage'
     
 end

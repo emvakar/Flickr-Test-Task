@@ -15,11 +15,12 @@ class CollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
-
+    
     override func prepareForReuse() {
-        photo.image = nil
+        super.prepareForReuse()
+        self.photo.image = nil
     }
     
     func configure(photo: Photo) {
