@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-extension MainViewController: UICollectionViewDataSource {
+
+class DataSource: NSObject, UICollectionViewDataSource {
+    
+    var jsonArr = [JSON]()
+    var page: Int = 1
+    var isLoading: Bool = false
+    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -24,10 +31,20 @@ extension MainViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if (self.jsonArr.count - indexPath.row) <= 10 {
-            self.fetchRecent(page: page)
+    func fetchRecent(page: Int, completion: @escaping() -> Void) {
+        if !self.isLoading {
+            self.isLoading = true
+            API.sharedInstance.getRecentPhoto(page: page, method: .getRecent, per_page: 25) { (jsonArr) in
+                for photoJ in jsonArr {
+                    if !(photoJ["url_n"].stringValue.isEmpty) && !(self.jsonArr.contains(photoJ)) {
+                        self.jsonArr.append(photoJ)
+                    }
+                }
+                self.isLoading = false
+                self.page += 1
+                completion()
+            }
         }
     }
-    
 }
+

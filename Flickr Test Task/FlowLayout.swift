@@ -16,12 +16,14 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
         var heightPerItem = widthPerItem
-        if let photo = Photo(json: self.jsonArr[indexPath.row]) {
+        
+        if let photo = Photo(json: datasource.jsonArr[indexPath.row]) {
             if photo.width_o > 0 && photo.height_o > 0 {
                 let ratio = CGFloat(photo.width_o / photo.height_o)
                 heightPerItem = CGFloat(self.collectionView.frame.width / ratio)
             }
         }
+        
         return CGSize(width: widthPerItem, height: heightPerItem)
     }
     
@@ -36,5 +38,4 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return minimumInteritemSpacing
     }
-    
 }
